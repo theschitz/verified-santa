@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Santa verification</title>
+</head>
+
+<body>
+    <script>
+        var HasBeenVerified = false;
+        async function verifySantasFingerprint() {
+            await ShowLoader();
+            if (HasBeenVerified) {
+                document.getElementById('verify').style.display = 'none';
+                document.getElementById('verified-not-santa').style.display = 'block';
+                document.getElementById('scan-again-btn').style.display = 'block';
+                document.bgColor = 'orangered';
+            } else {
+                document.getElementById('verify').style.display = 'none';
+                document.getElementById('verified-ok-santa').style.display = 'block';
+                document.getElementById('scan-again-btn').style.display = 'block';
+                document.bgColor = 'green';
+            }
+            HasBeenVerified = true;
+        }
+        function resetScan() {
+            document.getElementById('verify').style.display = 'block';
+            document.getElementById('verified-ok-santa').style.display = 'none';
+            document.getElementById('scan-again-btn').style.display = 'none';
+            document.getElementById('verified-not-santa').style.display = 'none';
+            document.bgColor = '';
+        }
+        async function ShowLoader() {
+            console.log('loading...');
+            await sleep(1000);            
+            document.getElementById('spinner').style.display = 'block';
+            await sleep(5000);
+            console.log('Loading Complete.');
+            document.getElementById('spinner').style.display = 'none';
+        }
+        function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+    </script>
+    <div style="width: 100%; margin-right: auto; margin-left: auto; text-align: center;">
+        <div id="verify">
+            <h1>Please scan fingerprint to verify Santa</h1>
+            <img src="resources/fingerprint.png" onclick="verifySantasFingerprint()" style="width: 50%; margin-top: 10em;" />
+
+        </div>
+        <div id="spinner" style="display: none;">
+            <img src="resources/loading_spinner.gif" alt="Loading." style="width: 50%;">
+        </div>
+        <div id="verified-ok-santa" style="display: none; background-color: green;">
+            <h1>OK! Santa is verified!</h1>
+            <img src="resources/MerryOldSanta.jpg" style="overflow: hidden; width: 90%;" />
+        </div>
+        <div id="verified-not-santa" style="display: none; background-color: orangered; margin-top: 10em;">
+            <h1>NOT SANTA!</h1>
+        </div>
+        <button id="scan-again-btn" onclick="resetScan()" style="display: none; margin-right: auto; margin-left: auto;">Scan again</button>
+    </div>
+</body>
+
+</html>
